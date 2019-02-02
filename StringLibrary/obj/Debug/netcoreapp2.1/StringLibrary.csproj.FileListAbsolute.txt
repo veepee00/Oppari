@@ -1,9 +1,0 @@
-C:\Oppari\StringLibrary\bin\Debug\netcoreapp2.1\StringLibrary.deps.json
-C:\Oppari\StringLibrary\bin\Debug\netcoreapp2.1\StringLibrary.dll
-C:\Oppari\StringLibrary\bin\Debug\netcoreapp2.1\StringLibrary.pdb
-C:\Oppari\StringLibrary\obj\Debug\netcoreapp2.1\StringLibrary.csproj.CoreCompileInputs.cache
-C:\Oppari\StringLibrary\obj\Debug\netcoreapp2.1\StringLibrary.AssemblyInfoInputs.cache
-C:\Oppari\StringLibrary\obj\Debug\netcoreapp2.1\StringLibrary.AssemblyInfo.cs
-C:\Oppari\StringLibrary\obj\Debug\netcoreapp2.1\StringLibrary.dll
-C:\Oppari\StringLibrary\obj\Debug\netcoreapp2.1\StringLibrary.pdb
-C:\Oppari\StringLibrary\obj\Debug\netcoreapp2.1\StringLibrary.csprojAssemblyReference.cache

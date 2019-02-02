@@ -1,8 +1,0 @@
-C:\Oppari\MethodLibrary\bin\Debug\netcoreapp2.1\MethodLibrary.deps.json
-C:\Oppari\MethodLibrary\bin\Debug\netcoreapp2.1\MethodLibrary.dll
-C:\Oppari\MethodLibrary\bin\Debug\netcoreapp2.1\MethodLibrary.pdb
-C:\Oppari\MethodLibrary\obj\Debug\netcoreapp2.1\MethodLibrary.csproj.CoreCompileInputs.cache
-C:\Oppari\MethodLibrary\obj\Debug\netcoreapp2.1\MethodLibrary.AssemblyInfoInputs.cache
-C:\Oppari\MethodLibrary\obj\Debug\netcoreapp2.1\MethodLibrary.AssemblyInfo.cs
-C:\Oppari\MethodLibrary\obj\Debug\netcoreapp2.1\MethodLibrary.dll
-C:\Oppari\MethodLibrary\obj\Debug\netcoreapp2.1\MethodLibrary.pdb
