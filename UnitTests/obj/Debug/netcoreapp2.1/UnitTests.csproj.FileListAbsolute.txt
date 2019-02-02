@@ -1,0 +1,14 @@
+C:\Oppari\UnitTests\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Oppari\UnitTests\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Oppari\UnitTests\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Oppari\UnitTests\bin\Debug\netcoreapp2.1\UnitTests.deps.json
+C:\Oppari\UnitTests\bin\Debug\netcoreapp2.1\UnitTests.runtimeconfig.json
+C:\Oppari\UnitTests\bin\Debug\netcoreapp2.1\UnitTests.runtimeconfig.dev.json
+C:\Oppari\UnitTests\bin\Debug\netcoreapp2.1\UnitTests.dll
+C:\Oppari\UnitTests\bin\Debug\netcoreapp2.1\UnitTests.pdb
+C:\Oppari\UnitTests\obj\Debug\netcoreapp2.1\UnitTests.csprojAssemblyReference.cache
+C:\Oppari\UnitTests\obj\Debug\netcoreapp2.1\UnitTests.csproj.CoreCompileInputs.cache
+C:\Oppari\UnitTests\obj\Debug\netcoreapp2.1\UnitTests.AssemblyInfoInputs.cache
+C:\Oppari\UnitTests\obj\Debug\netcoreapp2.1\UnitTests.AssemblyInfo.cs
+C:\Oppari\UnitTests\obj\Debug\netcoreapp2.1\UnitTests.dll
+C:\Oppari\UnitTests\obj\Debug\netcoreapp2.1\UnitTests.pdb

@@ -1,0 +1,8 @@
+C:\Oppari\StringLibrary\bin\Debug\netcoreapp2.1\MethodLibrary.deps.json
+C:\Oppari\StringLibrary\bin\Debug\netcoreapp2.1\MethodLibrary.dll
+C:\Oppari\StringLibrary\bin\Debug\netcoreapp2.1\MethodLibrary.pdb
+C:\Oppari\StringLibrary\obj\Debug\netcoreapp2.1\MethodLibrary.csproj.CoreCompileInputs.cache
+C:\Oppari\StringLibrary\obj\Debug\netcoreapp2.1\MethodLibrary.AssemblyInfoInputs.cache
+C:\Oppari\StringLibrary\obj\Debug\netcoreapp2.1\MethodLibrary.AssemblyInfo.cs
+C:\Oppari\StringLibrary\obj\Debug\netcoreapp2.1\MethodLibrary.dll
+C:\Oppari\StringLibrary\obj\Debug\netcoreapp2.1\MethodLibrary.pdb
