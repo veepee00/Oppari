@@ -40,7 +40,7 @@ namespace Oppari.Controllers
 
         public string CheckOldFilesFromDirectory(string folder, string mask, int time = -10)
         {
-            if (folder == "" || folder == null || mask == "" || mask == null)
+            if (String.IsNullOrEmpty(folder) || String.IsNullOrEmpty(mask))
             {
                 throw new ArgumentNullException();
             }
@@ -67,24 +67,22 @@ namespace Oppari.Controllers
             {
                 return "Tiedostojen lukumäärä, joihin ei ole koskettu " + time.ToString() + " minuutin sisällä ei löytynyt!";
             }
-            
+
         }
 
-        public string CheckSqlQueries()
+        public string CheckSqlQueries(string query)
         {
+            if (String.IsNullOrEmpty(query))
+            {
+                throw new ArgumentNullException();
+            }
             var optionsBuilder = new DbContextOptionsBuilder<ComputerBuildingContext>();
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ComputerBuilding_Db;Trusted_Connection=True;ConnectRetryCount=0");
             using (var context = new ComputerBuildingContext(optionsBuilder.Options))
             {
                 var builds = context.Builds.FromSql("SELECT * FROM dbo.Builds").ToList();
-                if (builds.Count() > 0)
-                {
-                    return "Tietokannasta löytyi " + builds.Count().ToString() + " tietokonetta.";
-                }
-                else
-                {
-                    return "Tietokannasta ei löytynyt yhtään tietokonetta!";
-                }
+
+                return $"Found {builds.Count().ToString()} matches with query: {query} .";
             }          
         }
     }

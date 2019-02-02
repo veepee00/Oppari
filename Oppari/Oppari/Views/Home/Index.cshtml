@@ -7,6 +7,6 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
     <a class="btn btn-success" href="@Url.Action("CheckOldFilesFromDirectory","Home", new { folder = @"C:\OppariUnitTests", mask = ".txt"})">CheckOldFilesFromDirectory</a>
-    <a class="btn btn-success" href="@Url.Action("CheckSqlQueries","Home", new { folder = @"C:\OppariUnitTests", mask = ".txt"})">CheckSqlQueries</a>
+    <a class="btn btn-success" href="@Url.Action("CheckSqlQueries","Home", new { query = "SELECT * FROM dbo.Builds"})">CheckSqlQueries</a>
 
 </div>
