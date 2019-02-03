@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "WatchDog Errors Page";
+    Layout = "~/Views/Shared/WatchDog.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">WatchDog Errors</h1>
+    <br />
+    <br />
+    <ul>
+        @foreach (var error in (List<string>)ViewData["ErrorList"])
+    {
+        <li><b>@error</b></li>
+    }
+    </ul>
+
+
+</div>

@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "WatchDog Page";
+    Layout = "~/Views/Shared/WatchDog.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">WatchDog</h1>
+    <br />
+
+
+    <a class="btn btn-success" href="@Url.Action("DebugCheckOldFilesFromDirectory","WatchDog", new { folder = @"C:\OppariUnitTests", mask = ".txt"})">CheckOldFilesFromDirectory</a>
+    <br />
+    <br />
+    <a class="btn btn-success" href="@Url.Action("DebugCheckSqlQueries","WatchDog", new { query = "SELECT * FROM dbo.Builds"})">CheckSqlQueries</a>
+    <br />
+    <br />
+
+
+</div>
