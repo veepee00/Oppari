@@ -1,18 +1,39 @@
 ﻿@{
     ViewData["Title"] = "WatchDog Errors Page";
     Layout = "~/Views/Shared/WatchDog.cshtml";
+    var errorList = (List<WatchDogErrorModel>)ViewData["ErrorList"];
 }
+
 
 <div class="text-center">
     <h1 class="display-4">WatchDog Errors</h1>
     <br />
     <br />
-    <ul>
-        @foreach (var error in (List<string>)ViewData["ErrorList"])
+    <div><b>WatchDog Error Table</b><br /></div>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Method Name </th>
+            <th>Error Message </th>
+            <th>Parameter1 </th>
+            <th>Parameter2</th>
+            <th>Parameter3</th>
+            <th>Parameter4</th>
+            <th>Parameter5</th>
+        </tr>
+        @foreach (WatchDogErrorModel error in errorList)
     {
-        <li><b>@error</b></li>
+        <tr>
+            <td>@error.MethodName</td>
+            <td>@error.ErrorMessage</td>
+            <td>@error.Parameter1</td>
+            <td>@error.Parameter2</td>
+            <td>@error.Parameter3</td>
+            <td>@error.Parameter4</td>
+            <td>@error.Parameter5</td>
+
+        </tr>
     }
-    </ul>
+    </table>
 
 
 </div>

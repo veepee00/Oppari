@@ -12,26 +12,22 @@ namespace UnitTests
     [TestClass]
     public class UnitTest1
     {
-
         [TestMethod]
         public void FileTestMethod1()
-        {         
-            HomeController homeController = new HomeController();
-
+        {          
             //Method must return ArgumentNullException if either parameter is empty or null
-            Assert.ThrowsException<ArgumentNullException>(() => homeController.CheckOldFilesFromDirectory(@"C:\Temp", null));
-            Assert.ThrowsException<ArgumentNullException>(() => homeController.CheckOldFilesFromDirectory(null, "*."));
-            Assert.ThrowsException<ArgumentNullException>(() => homeController.CheckOldFilesFromDirectory(@"C:\Temp", ""));
-            Assert.ThrowsException<ArgumentNullException>(() => homeController.CheckOldFilesFromDirectory("", "*."));
+            Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.CheckOldFilesFromDirectory(@"C:\Temp", null));
+            Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.CheckOldFilesFromDirectory(null, "*."));
+            Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.CheckOldFilesFromDirectory(@"C:\Temp", ""));
+            Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.CheckOldFilesFromDirectory("", "*."));
         }
 
         [TestMethod]
         public void SqlQueryTestMethod1()
         {
-            HomeController homeController = new HomeController();
             //Method must return ArgumentNullException if parameter is empty or null
-            Assert.ThrowsException<ArgumentNullException>(() => homeController.CheckSqlQueries(""));
-            Assert.ThrowsException<ArgumentNullException>(() => homeController.CheckSqlQueries(null));
+            Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.CheckSqlQueries(""));
+            Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.CheckSqlQueries(null));
         }
 
     }

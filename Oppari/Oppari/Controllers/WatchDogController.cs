@@ -13,7 +13,7 @@ namespace Oppari.Controllers
     public class WatchDogController : Controller
     {
         private static System.Timers.Timer timer;
-        private static List<string> errorList = new List<string>();
+        private static List<WatchDogErrorModel> errorList = new List<WatchDogErrorModel>();
         private static int errorCount;
         private static bool watchDogRunning;
         public IActionResult Index()
@@ -56,13 +56,13 @@ namespace Oppari.Controllers
             }
             finally
             {
-                errorList.RemoveAll(item => String.IsNullOrEmpty(item));
+                errorList.RemoveAll(item => item == null);
                 errorCount = errorList.Count();
                 timer.Enabled = true;
             }
         }
 
-        public static string CheckOldFilesFromDirectory(string folder, string mask, int time = -10)
+        public static WatchDogErrorModel CheckOldFilesFromDirectory(string folder, string mask, int time = -10)
         {
             //Montako tiedostoa löytyy, joihin ei ole koskettu {time} minuutin sisällä
             if (String.IsNullOrEmpty(folder) || String.IsNullOrEmpty(mask))
@@ -88,11 +88,11 @@ namespace Oppari.Controllers
             }
             else
             {
-                return $"CheckOldFilesFromDirectory failed with folder: {folder} and mask: {mask}";
+                return new WatchDogErrorModel("CheckOldFilesFromDirectory",$"Method returned 0 files.",folder, mask);
             }
         }
 
-        public static string CheckSqlQueries(string query)
+        public static WatchDogErrorModel CheckSqlQueries(string query)
         {
             //Montako osumaa löytyy haulla sql-kyselyllä {query}
             if (String.IsNullOrEmpty(query))
@@ -110,7 +110,7 @@ namespace Oppari.Controllers
                 }
                 else
                 {
-                    return $"CheckSqlQueries failed with query: {query}.";
+                    return new WatchDogErrorModel("CheckSqlQueries", $"Method returned 0 rows.",query);
                 }
             }
         }
