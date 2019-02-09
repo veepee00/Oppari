@@ -13,8 +13,6 @@ namespace Oppari.Controllers
     public class WatchDogController : Controller
     {
         private static System.Timers.Timer timer;
-        private static List<WatchDogErrorModel> errorList = new List<WatchDogErrorModel>();
-        private static int errorCount;
         private static bool watchDogRunning;
         public IActionResult Index()
         {
@@ -22,6 +20,11 @@ namespace Oppari.Controllers
             {
                 watchDogRunning = true;
                 StartWatchDog();
+            }
+            int errorCount;
+            using (var context = new WatchDogErrorContext())
+            {
+                errorCount = context.WatchDogErrors.Count();
             }
             ViewData["ErrorCount"] = errorCount;
             return View();
@@ -37,6 +40,14 @@ namespace Oppari.Controllers
 
         public IActionResult WatchDogErrors()
         {
+            int errorCount;
+            List<WatchDogErrorModel> errorList = new List<WatchDogErrorModel>();
+            using (var context = new WatchDogErrorContext())
+            {
+                errorCount = context.WatchDogErrors.Count();
+                errorList = context.WatchDogErrors.Where(e => e.Status == 50).ToList();
+            }
+
             ViewData["ErrorCount"] = errorCount;
             ViewData["ErrorList"] = errorList;
             return View();
@@ -47,8 +58,8 @@ namespace Oppari.Controllers
             timer.Enabled = false;
             try
             {
-                errorList.Add(CheckOldFilesFromDirectory(@"C:\OppariUnitTests", ".txt"));
-                errorList.Add(CheckSqlQueries("SELECT * FROM dbo.Builds"));      
+                CheckOldFilesFromDirectory(@"C:\OppariUnitTests", ".txt");
+                CheckSqlQueries("SELECT * FROM dbo.WatchDogErrors");      
             }
             catch (Exception ex)
             {
@@ -56,13 +67,11 @@ namespace Oppari.Controllers
             }
             finally
             {
-                errorList.RemoveAll(item => item == null);
-                errorCount = errorList.Count();
                 timer.Enabled = true;
             }
         }
 
-        public static WatchDogErrorModel CheckOldFilesFromDirectory(string folder, string mask, int time = -10)
+        public static void CheckOldFilesFromDirectory(string folder, string mask, int time = -10)
         {
             //Montako tiedostoa löytyy, joihin ei ole koskettu {time} minuutin sisällä
             if (String.IsNullOrEmpty(folder) || String.IsNullOrEmpty(mask))
@@ -84,36 +93,52 @@ namespace Oppari.Controllers
             }
             if (returnFiles.Count() > 0)
             {
-                return null;
+                //jippii
             }
             else
             {
-                return new WatchDogErrorModel("CheckOldFilesFromDirectory",$"Method returned 0 files.",folder, mask);
+                WatchDogErrorModel wdError = new WatchDogErrorModel("CheckOldFilesFromDirectory", $"Method returned 0 files.", 50, DateTime.Now, folder, mask);
+                AddWatchDogErrorToDb(wdError);
             }
         }
 
-        public static WatchDogErrorModel CheckSqlQueries(string query)
+        public static void CheckSqlQueries(string query)
         {
-            //Montako osumaa löytyy haulla sql-kyselyllä {query}
             if (String.IsNullOrEmpty(query))
             {
                 throw new ArgumentNullException();
             }
-            var optionsBuilder = new DbContextOptionsBuilder<ComputerBuildingContext>();
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ComputerBuilding_Db;Trusted_Connection=True;ConnectRetryCount=0");
-            using (var context = new ComputerBuildingContext(optionsBuilder.Options))
+
+            using (var context = new WatchDogErrorContext())
             {
-                var builds = context.Builds.FromSql("SELECT * FROM dbo.Builds").ToList();
-                if (builds.Count() > 0)
+                var builds = context.WatchDogErrors.FromSql(query).ToList();
+                if (builds.Count() == 10)
                 {
-                    return null;
+                    //jippii
                 }
                 else
                 {
-                    return new WatchDogErrorModel("CheckSqlQueries", $"Method returned 0 rows.",query);
+                    WatchDogErrorModel wdError = new WatchDogErrorModel("CheckSqlQueries", $"Method returned 0 rows.", 50,DateTime.Now, query);
+                    AddWatchDogErrorToDb(wdError);
                 }
             }
         }
+
+        public static void AddWatchDogErrorToDb(WatchDogErrorModel wdError)
+        {
+            if (wdError == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            using (var context = new WatchDogErrorContext())
+            {
+                context.WatchDogErrors.Add(wdError);
+                context.SaveChanges();
+            }
+
+        }
+
         public string DebugCheckOldFilesFromDirectory(string folder, string mask, int time = -10) 
         {
             //Montako tiedostoa löytyy, joihin ei ole koskettu {time} minuutin sisällä
@@ -153,11 +178,11 @@ namespace Oppari.Controllers
             {
                 throw new ArgumentNullException();
             }
-            var optionsBuilder = new DbContextOptionsBuilder<ComputerBuildingContext>();
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ComputerBuilding_Db;Trusted_Connection=True;ConnectRetryCount=0");
-            using (var context = new ComputerBuildingContext(optionsBuilder.Options))
+            var optionsBuilder = new DbContextOptionsBuilder<WatchDogErrorContext>();
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=WatchDog_Db;Trusted_Connection=True;ConnectRetryCount=0");
+            using (var context = new WatchDogErrorContext(optionsBuilder.Options))
             {
-                var builds = context.Builds.FromSql("SELECT * FROM dbo.Builds").ToList();
+                var builds = context.WatchDogErrors.FromSql(query).ToList();
 
                 return $"Found {builds.Count().ToString()} matches with query: {query}.";
             }

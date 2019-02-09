@@ -27,11 +27,6 @@ C:\Oppari\Oppari\Oppari\obj\Debug\netcoreapp2.2\Oppari.Views.pdb
 C:\Oppari\Oppari\Oppari\obj\Debug\netcoreapp2.2\Oppari.dll
 C:\Oppari\Oppari\Oppari\obj\Debug\netcoreapp2.2\Oppari.pdb
 C:\Oppari\Oppari\Oppari\obj\Debug\netcoreapp2.2\Oppari.csproj.CopyComplete
-C:\Oppari\Oppari\Oppari\obj\Debug\netcoreapp2.2\Razor\Views\Builds\Create.g.cshtml.cs
-C:\Oppari\Oppari\Oppari\obj\Debug\netcoreapp2.2\Razor\Views\Builds\Delete.g.cshtml.cs
-C:\Oppari\Oppari\Oppari\obj\Debug\netcoreapp2.2\Razor\Views\Builds\Details.g.cshtml.cs
-C:\Oppari\Oppari\Oppari\obj\Debug\netcoreapp2.2\Razor\Views\Builds\Edit.g.cshtml.cs
-C:\Oppari\Oppari\Oppari\obj\Debug\netcoreapp2.2\Razor\Views\Builds\Index.g.cshtml.cs
 C:\Oppari\Oppari\Oppari\obj\Debug\netcoreapp2.2\Razor\Views\WatchDog\Index.g.cshtml.cs
 C:\Oppari\Oppari\Oppari\obj\Debug\netcoreapp2.2\Razor\Views\WatchDog\WatchDogErrors.g.cshtml.cs
 C:\Oppari\Oppari\Oppari\obj\Debug\netcoreapp2.2\Razor\Views\Shared\WatchDog.g.cshtml.cs

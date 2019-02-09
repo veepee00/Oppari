@@ -35,8 +35,8 @@ namespace Oppari
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=ComputerBuilding_Db;Trusted_Connection=True;ConnectRetryCount=0";
-            services.AddDbContext<ComputerBuildingContext>
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=WatchDog_Db;Trusted_Connection=True;ConnectRetryCount=0";
+            services.AddDbContext<WatchDogErrorContext>
                 (options => options.UseSqlServer(connection));
         }
 
