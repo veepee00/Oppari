@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Oppari.Models;
 using Microsoft.EntityFrameworkCore;
+using Oppari.Controllers;
 
 namespace Oppari
 {
@@ -19,6 +20,7 @@ namespace Oppari
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            WatchDogController.WatchDogTimer();
         }
 
         public IConfiguration Configuration { get; }

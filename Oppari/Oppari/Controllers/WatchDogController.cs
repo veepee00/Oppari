@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Timers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Oppari.Models;
@@ -12,15 +11,8 @@ namespace Oppari.Controllers
 {
     public class WatchDogController : Controller
     {
-        private static System.Timers.Timer timer;
-        private static bool watchDogRunning;
         public IActionResult Index()
         {
-            if (!watchDogRunning)
-            {
-                watchDogRunning = true;
-                StartWatchDog();
-            }
             int errorCount;
             using (var context = new WatchDogErrorContext())
             {
@@ -30,12 +22,13 @@ namespace Oppari.Controllers
             return View();
         }
 
-        public void StartWatchDog()
+        public static async Task WatchDogTimer()
         {
-            timer = new System.Timers.Timer(10000);
-            timer.Elapsed += new ElapsedEventHandler(ExecuteWatchDogTests);
-            timer.Interval = 10000;
-            timer.Enabled = true;
+            while (true)
+            {
+                ExecuteWatchDogTests();
+                await Task.Delay(10000);
+            }
         }
 
         public IActionResult WatchDogErrors()
@@ -53,9 +46,8 @@ namespace Oppari.Controllers
             return View();
         }
 
-        public static void ExecuteWatchDogTests(object source, ElapsedEventArgs e)
+        public static void ExecuteWatchDogTests()
         {        
-            timer.Enabled = false;
             try
             {
                 CheckOldFilesFromDirectory(@"C:\OppariUnitTests", ".txt");
@@ -67,7 +59,7 @@ namespace Oppari.Controllers
             }
             finally
             {
-                timer.Enabled = true;
+
             }
         }
 
