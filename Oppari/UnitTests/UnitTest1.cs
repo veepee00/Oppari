@@ -30,5 +30,11 @@ namespace UnitTests
             Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.CheckSqlQueries(null));
         }
 
+        [TestMethod]
+        public void NullAOrEmptyTestMethod()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.AddWatchDogErrorToDb(null));
+        }
+
     }
 }
