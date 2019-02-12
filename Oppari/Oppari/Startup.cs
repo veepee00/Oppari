@@ -17,10 +17,14 @@ namespace Oppari
 {
     public class Startup
     {
+        public static List<Action> watchDogTests = new List<Action>();
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
             WatchDogController.WatchDogTimer();
+            watchDogTests.Add(() => WatchDogController.CheckOldFilesFromDirectory(@"C:\OppariUnitTests", ".txt"));
+            watchDogTests.Add(() => WatchDogController.CheckSqlQueries("SELECT * FROM dbo.WatchDogErrors"));
+
         }
 
         public IConfiguration Configuration { get; }

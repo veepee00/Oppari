@@ -11,6 +11,7 @@ namespace Oppari.Controllers
 {
     public class WatchDogController : Controller
     {
+        public static bool watchDogRunning = true;
         public IActionResult Index()
         {
             int errorCount;
@@ -24,7 +25,7 @@ namespace Oppari.Controllers
 
         public static async Task WatchDogTimer()
         {
-            while (true)
+            while (watchDogRunning)
             {
                 ExecuteWatchDogTests();
                 await Task.Delay(10000);
@@ -47,11 +48,18 @@ namespace Oppari.Controllers
         }
 
         public static void ExecuteWatchDogTests()
-        {        
+        {
             try
             {
-                CheckOldFilesFromDirectory(@"C:\OppariUnitTests", ".txt");
-                CheckSqlQueries("SELECT * FROM dbo.WatchDogErrors");      
+                if (Startup.watchDogTests.Count == 0)
+                {
+                    watchDogRunning = false;
+                    throw new Exception("Suoritettavia testejä ei löytynyt!");                    
+                }
+                foreach (var method in Startup.watchDogTests)
+                {
+                    method.Invoke();
+                }
             }
             catch (Exception ex)
             {
