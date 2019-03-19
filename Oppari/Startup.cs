@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Oppari.Models;
 using Microsoft.EntityFrameworkCore;
 using Oppari.Controllers;
+using Oppari.Hubs;
 
 namespace Oppari
 {
@@ -21,9 +22,9 @@ namespace Oppari
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            WatchDogController.WatchDogTimer();
             watchDogTests.Add(() => WatchDogController.CheckOldFilesFromDirectory(@"C:\OppariUnitTests", ".txt"));
             watchDogTests.Add(() => WatchDogController.CheckSqlQueries("SELECT * FROM dbo.WatchDogErrors"));
+            WatchDogController.WatchDogTimer();
 
         }
 
@@ -44,6 +45,8 @@ namespace Oppari
             var connection = @"Server=(localdb)\mssqllocaldb;Database=WatchDog_Db;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<WatchDogErrorContext>
                 (options => options.UseSqlServer(connection));
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +72,11 @@ namespace Oppari
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<WatchDogHub>("/watchDogHub");
             });
         }
     }

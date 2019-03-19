@@ -6,12 +6,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Oppari.Models;
+using Oppari.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Oppari.Controllers
 {
     public class WatchDogController : Controller
     {
-        public static bool watchDogRunning = true;
+        //Apuja
+        //private readonly IHubContext<WatchDogHub> _hubContext;
+        //public WatchDogController(IHubContext<WatchDogHub> hubContext)
+        //{
+        //    _hubContext = hubContext;
+        //}
+
+        public static bool watchDogRunning;
         public IActionResult Index()
         {
             int errorCount;
@@ -25,6 +34,7 @@ namespace Oppari.Controllers
 
         public static async Task WatchDogTimer()
         {
+            watchDogRunning = true;
             while (watchDogRunning)
             {
                 ExecuteWatchDogTests();
@@ -135,9 +145,18 @@ namespace Oppari.Controllers
             {
                 context.WatchDogErrors.Add(wdError);
                 context.SaveChanges();
-            }
 
+                
+
+                //Apuja, miten saa kutsuttua tätä metodia
+                //UpdateWatchDogErrorCount(context.WatchDogErrors.Count());
+            }
         }
+        //Apuja
+        //public async Task UpdateWatchDogErrorCount(int errorCount)
+        //{
+        //    await _hubContext.Clients.All.SendAsync("UpdateWatchDogErrorCount", errorCount);
+        //}
 
         public string DebugCheckOldFilesFromDirectory(string folder, string mask, int time = -10) 
         {
