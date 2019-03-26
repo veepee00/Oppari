@@ -68,13 +68,13 @@ namespace Oppari
     {
         //public static List<IChecker> watchDogChecks = new List<IChecker>();
         public static List<Action> watchDogTests = new List<Action>();
-        private readonly IHubContext<WatchDogHub> _hubContext;
+        IHubContext<WatchDogHub,IWatchDog> _hubContext;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
 
             WatchDogHandler watchDogHandler = new WatchDogHandler(_hubContext);
-            WatchDogChecks watchDogChecks = new WatchDogChecks();
+            WatchDogChecks watchDogChecks = new WatchDogChecks(_hubContext);
 
             watchDogTests.Add(() => watchDogChecks.CheckOldFilesFromDirectory(@"C:\OppariUnitTests", ".txt"));
             watchDogTests.Add(() => watchDogChecks.CheckSqlQueries("SELECT * FROM dbo.WatchDogErrors"));

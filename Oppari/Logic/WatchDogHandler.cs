@@ -13,7 +13,7 @@ namespace Oppari.Logic
 {
     public class WatchDogHandler : BackgroundService
     {
-        private readonly IHubContext<WatchDogHub> _hubContext;
+        IHubContext<WatchDogHub, IWatchDog> _hubContext;
         public bool watchDogRunning { get; set; }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -26,7 +26,7 @@ namespace Oppari.Logic
             }
         }
 
-        public WatchDogHandler(IHubContext<WatchDogHub> hubContext)
+        public WatchDogHandler(IHubContext<WatchDogHub,IWatchDog> hubContext)
         {
             _hubContext = hubContext;
         }
@@ -67,7 +67,7 @@ namespace Oppari.Logic
                 context.WatchDogErrors.Add(wdError);
                 context.SaveChanges();
 
-                await _hubContext.Clients.All.SendAsync("UpdateWatchDogErrorCount", context.WatchDogErrors.Count());
+                await _hubContext.Clients.All.UpdateWatchDogErrors("UpdateWatchDogErrors", context.WatchDogErrors.Count());
             }
         }
     }

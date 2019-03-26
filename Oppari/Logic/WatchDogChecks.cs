@@ -12,10 +12,10 @@ namespace Oppari.Logic
 {
     public class WatchDogChecks
     {
-        private readonly IHubContext<WatchDogHub> _hubContext;
-        public WatchDogChecks()
+        IHubContext<WatchDogHub,IWatchDog> _hubContext;
+        public WatchDogChecks(IHubContext<WatchDogHub, IWatchDog> hubContext)
         {
-
+            _hubContext = hubContext;
         }
 
         public async Task CheckOldFilesFromDirectory(string folder, string mask, int time = -10)

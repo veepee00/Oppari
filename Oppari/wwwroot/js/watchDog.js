@@ -9,7 +9,7 @@ connection.on("ReceiveWatchDogErrorsUpdate", function (rng) {
 	document.getElementById('updateWatchDogErrors').value = rng.toString();
 });
 
-connection.on("UpdateWatchDogErrorCount", function (watchDogErrorCount) {
+connection.on("UpdateWatchDogErrors", function (watchDogErrorCount) {
 	document.getElementById('watchDogErrorCount').innerHTML = watchDogErrorCount.toString();
 });
 
