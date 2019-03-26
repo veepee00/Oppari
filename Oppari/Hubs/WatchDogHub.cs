@@ -11,7 +11,7 @@ namespace Oppari.Hubs
     {
         public async Task UpdateWatchDogErrors()
         {
-            //päivitä kanta
+            //TODO - päivitä kanta
             Random rng = new Random();
             int number = rng.Next(1, 10);
             await Clients.All.SendAsync("ReceiveWatchDogErrorsUpdate", number);
