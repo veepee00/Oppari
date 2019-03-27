@@ -10,12 +10,11 @@ namespace Oppari.Hubs
 {
     public class WatchDogHub : Hub<IWatchDog>
     {
-        public async Task UpdateWatchDogErrors()
+        public async Task RandomButton()
         {
-            //TODO - päivitä kanta
             Random rng = new Random();
-            int number = rng.Next(1, 10);
-            await Clients.All.UpdateWatchDogErrors("ReceiveWatchDogErrorsUpdate", number);
+            int randomNumber = rng.Next(1, 10);
+            await Clients.All.RandomButton(randomNumber);
         }
     }
 }

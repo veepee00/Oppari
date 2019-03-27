@@ -1,11 +1,7 @@
 ﻿@{
-    var errorCount = (int)ViewData["ErrorCount"];
+    var errors = (int)ViewData["ErrorCount"];
 }
-@section scripts
-{
-    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/watchDog.js"></script>
-}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,13 +32,13 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    @if (errorCount > 0)
+                    @if (errors > 0)
                     {
-                        <a class="btn btn-danger" id="watchDogErrorCount" href="@Url.Action("WatchDogErrors","WatchDog", new { query = "SELECT * FROM dbo.WatchDogErrors"})">@errorCount</a>
+                        <a class="btn btn-danger" id="watchDogErrorCount" href="@Url.Action("WatchDogErrors","WatchDog", new { query = "SELECT * FROM dbo.WatchDogErrors"})">@errors</a>
                     }
                     else
                     {
-                        <a class="btn btn-success" id="watchDogErrorCount" href="@Url.Action("WatchDogErrors","WatchDog", new { query = "SELECT * FROM dbo.WatchDogErrors"})">@errorCount</a>
+                        <a class="btn btn-success" id="watchDogErrorCount" href="@Url.Action("WatchDogErrors","WatchDog", new { query = "SELECT * FROM dbo.WatchDogErrors"})">@errors</a>
                     }
 
                     <ul class="navbar-nav flex-grow-1">

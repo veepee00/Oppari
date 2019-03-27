@@ -67,7 +67,7 @@ namespace Oppari.Logic
                 context.WatchDogErrors.Add(wdError);
                 context.SaveChanges();
 
-                await _hubContext.Clients.All.UpdateWatchDogErrors("UpdateWatchDogErrors", context.WatchDogErrors.Count());
+                await _hubContext.Clients.All.UpdateWatchDogErrors(context.WatchDogErrors.ToList());
             }
         }
     }

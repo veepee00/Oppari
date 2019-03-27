@@ -32,16 +32,32 @@ connection.on("UpdateWatchDogErrors", function (watchDogErrorList) {
         cell1.innerHTML = watchDogErrorList[i].methodName;
         cell2.innerHTML = watchDogErrorList[i].errorMessage;
         cell3.innerHTML = watchDogErrorList[i].status;
-        cell4.innerHTML = watchDogErrorList[i].timeStamp;
+        cell4.innerHTML = watchDogErrorList[i].timeStamp.toLocaleString("fi-FI");
         cell5.innerHTML = watchDogErrorList[i].parameter1;
         cell6.innerHTML = watchDogErrorList[i].parameter2;
         cell7.innerHTML = watchDogErrorList[i].parameter3;
         cell8.innerHTML = watchDogErrorList[i].parameter4;
         cell9.innerHTML = watchDogErrorList[i].parameter5;
     }
+
 });
 
-connection.start().then(function () {
+//Disable send button until connection is established
+document.getElementById("randomButton").disabled = true;
+
+connection.on("RandomButton", function (rng) {
+    document.getElementById('randomButton').value = rng.toString();
+});
+
+connection.start().then(function(){
+    document.getElementById("randomButton").disabled = false;
 }).catch(function (err) {
     return console.error(err.toString());
+});
+
+document.getElementById("randomButton").addEventListener("click", function (event) {
+    connection.invoke("RandomButton").catch(function (err) {
+        return console.error(err.toString());
     });
+    event.preventDefault();
+});

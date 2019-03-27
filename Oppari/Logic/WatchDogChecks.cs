@@ -60,16 +60,9 @@ namespace Oppari.Logic
             using (var context = new WatchDogErrorContext())
             {
                 var builds = context.WatchDogErrors.FromSql(query).ToList();
-                if (builds.Count() == 10)
-                {
-                    //jippii
-                }
-                else
-                {
-                    WatchDogErrorModel wdError = new WatchDogErrorModel("CheckSqlQueries", $"Method returned 0 rows.", 50, DateTime.Now, query);
-                    WatchDogHandler watchDogHandler = new WatchDogHandler(_hubContext);
-                    await watchDogHandler.AddWatchDogErrorToDb(wdError);
-                }
+                WatchDogErrorModel wdError = new WatchDogErrorModel("CheckSqlQueries", $"Method returned 0 rows.", 50, DateTime.Now, query);
+                WatchDogHandler watchDogHandler = new WatchDogHandler(_hubContext);
+                await watchDogHandler.AddWatchDogErrorToDb(wdError);
             }
         }
 

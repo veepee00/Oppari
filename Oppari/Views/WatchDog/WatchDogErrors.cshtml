@@ -1,12 +1,12 @@
 ﻿@{
     ViewData["Title"] = "WatchDog Errors Page";
-    Layout = "~/Views/Shared/WatchDog.cshtml";
+    Layout = "~/Views/WatchDog/WatchDog.cshtml";
     var errorList = (List<WatchDogErrorModel>)ViewData["ErrorList"];
 }
 @section scripts
 {
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>  
-    <script src="~/js/watchDog.js"></script>  
+    <script src="~/js/watchDogErrors.js"></script>  
 }
 
 
@@ -14,11 +14,11 @@
         <h1 class="display-4">WatchDog Errors</h1>
         <br />
         <br />
-        <input type="button" id="updateWatchDogErrors" value="Mark as Solved" />
+        <input type="button" id="randomButton" value="Mark as Solved" />
         <br />
         <br />
         <div><b>WatchDog Error Table</b><br /></div>
-        <table class="table table-bordered table-responsive table-hover">
+        <table class="table table-bordered table-responsive table-hover" id="watchDogErrorsTable">
             <tr>
                 <th>Method Name </th>
                 <th>Error Message </th>

@@ -1,6 +1,11 @@
 ﻿@{
     ViewData["Title"] = "WatchDog Page";
-    Layout = "~/Views/Shared/WatchDog.cshtml";
+    Layout = "~/Views/WatchDog/WatchDog.cshtml";
+}
+@section scripts
+{
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/watchDog.js"></script>
 }
 
 <div class="text-center">
@@ -11,7 +16,7 @@
     <a class="btn btn-success" href="@Url.Action("DebugCheckOldFilesFromDirectory","WatchDog", new { folder = @"C:\OppariUnitTests", mask = ".txt"})">CheckOldFilesFromDirectory</a>
     <br />
     <br />
-    <a class="btn btn-success" href="@Url.Action("DebugCheckSqlQueries","WatchDog", new { query = "SELECT * FROM dbo.Builds"})">CheckSqlQueries</a>
+    <a class="btn btn-success" href="@Url.Action("DebugCheckSqlQueries","WatchDog", new { query = "SELECT * FROM dbo.WatchDogErrors"})">CheckSqlQueries</a>
     <br />
     <br />
 

@@ -73,11 +73,6 @@ namespace Oppari
         {
             Configuration = configuration;
 
-            WatchDogHandler watchDogHandler = new WatchDogHandler(_hubContext);
-            WatchDogChecks watchDogChecks = new WatchDogChecks(_hubContext);
-
-            watchDogTests.Add(() => watchDogChecks.CheckOldFilesFromDirectory(@"C:\OppariUnitTests", ".txt"));
-            watchDogTests.Add(() => watchDogChecks.CheckSqlQueries("SELECT * FROM dbo.WatchDogErrors"));
 
             //watchDogHandler.WatchDogTimer();
 
@@ -144,6 +139,15 @@ namespace Oppari
             {
                 routes.MapHub<WatchDogHub>("/watchDogHub");
             });
+
+            _hubContext = app.ApplicationServices.GetService<IHubContext<WatchDogHub, IWatchDog>>();
+
+            WatchDogHandler watchDogHandler = new WatchDogHandler(_hubContext);
+            WatchDogChecks watchDogChecks = new WatchDogChecks(_hubContext);
+
+            watchDogTests.Add(() => watchDogChecks.CheckOldFilesFromDirectory(@"C:\OppariUnitTests", ".txt"));
+            watchDogTests.Add(() => watchDogChecks.CheckSqlQueries("SELECT * FROM dbo.WatchDogErrors"));
+
         }
     }
 }
