@@ -22,7 +22,7 @@ namespace Oppari.Logic
             while (!stoppingToken.IsCancellationRequested)
             {
                 ExecuteWatchDogTests();
-                await Task.Delay(10000);
+                await Task.Delay(5000);
             }
         }
 
@@ -37,7 +37,6 @@ namespace Oppari.Logic
             {
                 if (Startup.watchDogTests.Count == 0)
                 {
-                    //lisää cancellationtoken
                     throw new Exception("Suoritettavia testejä ei löytynyt!");
                 }
                 foreach (var method in Startup.watchDogTests)

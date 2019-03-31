@@ -4,7 +4,12 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/watchDogHub").buil
 
 connection.on("UpdateWatchDogErrors", function (watchDogErrorList) {
     document.getElementById('watchDogErrorCount').innerHTML = watchDogErrorList.length;
-    document.getElementById('watchDogErrorCount').className = "btn btn-danger";
+    if (watchDogErrorList.length > 0) {
+        document.getElementById('watchDogErrorCount').className = "btn btn-danger";
+    }
+    else {
+        document.getElementById('watchDogErrorCount').className = "btn btn-success";
+    }
 
     var rowCount = watchDogErrorsTable.rows.length;
     for (var i = rowCount - 1; i > 0; i--) {
@@ -12,13 +17,9 @@ connection.on("UpdateWatchDogErrors", function (watchDogErrorList) {
     }
 
     for (var i in watchDogErrorList) {
-
-        if (i != 0) {
-            var row = watchDogErrorsTable.insertRow(i);
-        }
-        else {
-            continue;
-        }
+        i++;
+        var row = watchDogErrorsTable.insertRow(i);
+        i--;
 
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);

@@ -4,36 +4,40 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Oppari.Controllers;
-
-
+using Oppari.Logic;
+using Microsoft.AspNetCore.SignalR;
+using Oppari.Hubs;
+using System.Threading.Tasks;
 
 namespace UnitTests
-{
+{    
     [TestClass]
     public class UnitTest1
     {
+        WatchDogChecks wdChecks = new WatchDogChecks(null);
+        WatchDogHandler wdHandler = new WatchDogHandler(null);
         [TestMethod]
-        public void FileTestMethod1()
+        public async Task FileTestMethod1()
         {          
             //Method must return ArgumentNullException if either parameter is empty or null
-            Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.CheckOldFilesFromDirectory(@"C:\Temp", null));
-            Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.CheckOldFilesFromDirectory(null, "*."));
-            Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.CheckOldFilesFromDirectory(@"C:\Temp", ""));
-            Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.CheckOldFilesFromDirectory("", "*."));
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(async() => await wdChecks.CheckOldFilesFromDirectory(@"C:\Temp", null));
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(async () => await wdChecks.CheckOldFilesFromDirectory(null, "*."));
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(async () => await wdChecks.CheckOldFilesFromDirectory(@"C:\Temp", ""));
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(async () => await wdChecks.CheckOldFilesFromDirectory("", "*."));
         }
 
         [TestMethod]
-        public void SqlQueryTestMethod1()
+        public async Task SqlQueryTestMethod1()
         {
             //Method must return ArgumentNullException if parameter is empty or null
-            Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.CheckSqlQueries(""));
-            Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.CheckSqlQueries(null));
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(async () => await wdChecks.CheckSqlQueries(""));
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(async () => await wdChecks.CheckSqlQueries(null));
         }
 
         [TestMethod]
-        public void NullAOrEmptyTestMethod()
+        public async Task NullAOrEmptyTestMethod()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => WatchDogController.AddWatchDogErrorToDb(null));
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(async () => await wdHandler.AddWatchDogErrorToDb(null));
         }
 
     }

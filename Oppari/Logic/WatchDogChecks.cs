@@ -6,12 +6,58 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Oppari.Logic
 {
     public class WatchDogChecks
     {
+        //public interface IChecker
+        //{
+        //    void Check();
+        //}
+
+        //public abstract class CheckerBase : IChecker
+        //{
+        //    protected string[] Arguments;
+
+        //    public CheckerBase(string[] arguments)
+        //    {
+        //        Arguments = arguments;
+        //    }
+
+
+        //    public virtual void Check()
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
+
+        //public class Check1 : CheckerBase
+        //{
+        //    public Check1(string[] arguments) : base(arguments)
+        //    {
+        //    }
+
+        //    public override void Check()
+        //    {
+
+        //    }
+        //}
+
+        //public class Check2: CheckerBase
+        //{
+        //    public Check2(string[] arguments) : base(arguments)
+        //    {
+        //    }
+
+
+        //    public override void Check()
+        //    {
+
+        //    }
+        //}
         IHubContext<WatchDogHub,IWatchDog> _hubContext;
         public WatchDogChecks(IHubContext<WatchDogHub, IWatchDog> hubContext)
         {
@@ -52,6 +98,7 @@ namespace Oppari.Logic
 
         public async Task CheckSqlQueries(string query)
         {
+            //Kantakysely
             if (String.IsNullOrEmpty(query))
             {
                 throw new ArgumentNullException();
@@ -59,59 +106,11 @@ namespace Oppari.Logic
 
             using (var context = new WatchDogErrorContext())
             {
-                var builds = context.WatchDogErrors.FromSql(query).ToList();
+                var errors = context.WatchDogErrors.FromSql(query).ToList();
+                //lisää ehto
                 WatchDogErrorModel wdError = new WatchDogErrorModel("CheckSqlQueries", $"Method returned 0 rows.", 50, DateTime.Now, query);
                 WatchDogHandler watchDogHandler = new WatchDogHandler(_hubContext);
                 await watchDogHandler.AddWatchDogErrorToDb(wdError);
-            }
-        }
-
-        public string DebugCheckOldFilesFromDirectory(string folder, string mask, int time = -10)
-        {
-            //Montako tiedostoa löytyy, joihin ei ole koskettu {time} minuutin sisällä
-            if (String.IsNullOrEmpty(folder) || String.IsNullOrEmpty(mask))
-            {
-                throw new ArgumentNullException();
-            }
-
-            List<string> files = new List<string>(Directory.GetFiles(folder));
-            List<string> returnFiles = new List<string>();
-
-            foreach (string file in files)
-            {
-                FileInfo fi = new FileInfo(file);
-                if ((fi.LastWriteTime < DateTime.Now.AddMinutes(time)) && fi.Extension == mask)
-                {
-                    Console.WriteLine(fi.Extension);
-                    returnFiles.Add(file);
-                }
-            }
-
-            if (returnFiles.Count() > 0)
-            {
-                time *= -1;
-                return "Tiedostojen lukumäärä, joihin ei ole koskettu " + time.ToString() + " minuutin sisällä: " + returnFiles.Count().ToString();
-            }
-            else
-            {
-                return "Tiedostojen lukumäärä, joihin ei ole koskettu " + time.ToString() + " minuutin sisällä ei löytynyt!";
-            }
-        }
-
-        public string DebugCheckSqlQueries(string query)
-        {
-            //Montako osumaa löytyy haulla sql-kyselyllä {query}
-            if (String.IsNullOrEmpty(query))
-            {
-                throw new ArgumentNullException();
-            }
-            var optionsBuilder = new DbContextOptionsBuilder<WatchDogErrorContext>();
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=WatchDog_Db;Trusted_Connection=True;ConnectRetryCount=0");
-            using (var context = new WatchDogErrorContext(optionsBuilder.Options))
-            {
-                var builds = context.WatchDogErrors.FromSql(query).ToList();
-
-                return $"Found {builds.Count().ToString()} matches with query: {query}.";
             }
         }
     }
